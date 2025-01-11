@@ -2,20 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities{
+  body{
+    @apply font-poppins bg-secondary
   }
+  .logo-text {
+    @apply text-secondary font-extrabold text-4xl md:text-4xl md:text-5xl text-center  font-gt-walsheim
+  }
+  .nav-item{
+    @apply text-white font-medium text-base cursor-pointer font-poppins
+  }
+  .section-title{
+    @apply text-lg text-primary-dark font-semibold font-poppins
+  }
+  .blog-title{
+    @apply text-black font-semibold text-xl font-poppins group-hover:underline
+  }
+  .blog-featured_title{
+    @apply text-black font-semibold text-2xl font-poppins
+  }
+  .blog-super_title{
+    @apply text-secondary text-center font-extrabold text-4xl font-gt-walsheim
+  }
+  .blog-content{
+    @apply text-black font-normal text-lg font-poppins
+  }
+  .blog-desc{
+    @apply text-desc font-medium text-sm font-poppins
+  }
+  .copy-right{
+    @apply text-black font-normal text-xs font-poppins
+  }
+
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Animation */
+
+.trending-search {
+
+  transition: all .5s ease-in-out;
+  line-height: 0;
+  color: transparent;
+}
+
+.trending-search.show {
+  line-height: 2;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  color: black;
 }
