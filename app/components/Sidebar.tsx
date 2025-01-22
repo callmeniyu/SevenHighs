@@ -13,6 +13,7 @@ const Sidebar = ({ hidden }: { hidden: boolean }) => {
             <ul>
                 <li>hoi</li>
                 <li>hoi</li>
+                
                 <li>hoi</li>
                 <li>hoi</li>
             </ul>

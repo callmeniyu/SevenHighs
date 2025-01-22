@@ -4,7 +4,7 @@ import { IoSearchOutline } from "react-icons/io5"
 
 const Navbar = () => {
     return (
-        <div className="navbar bg-primary pt-5 drop-shadow-2xl">
+        <div className="navbar bg-primary pt-5 pb-3">
             <div className="flex justify-between pb-5 md:px-10 px-2">
                 <div className="flex order-1 gap-4 items-center md:-order-1">
                     <IoMenu className="text-4xl text-white cursor-pointer order-1 md:-order-1" />

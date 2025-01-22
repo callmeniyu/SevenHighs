@@ -1,22 +1,43 @@
-import Image from 'next/image'
-import React from 'react'
-import Views from './Views'
+import Image from "next/image"
+import React from "react"
+import Views from "./Views"
+import { BlogType } from "@/app/types"
 
-const PopularGreenBlogCard = () => {
+type PopularGreenBlogCardType = {
+    readnext: boolean
+    blog: BlogType
+}
+
+const PopularGreenBlogCard = ({ readnext, blog }: PopularGreenBlogCardType) => {
     return (
-        <div className={`PopularGreenBlogCard bg-primary flex flex-col gap-3 pt-4  rounded-lg min-w-60 xs:hidden md:block cursor-pointer group`}>
-          <div className='flex flex-col gap-3 px-4'>
-              <h2 className='blog-title'>Jennifer Love Hewitt, 45, says fans have a 'hard time' accepting that she doesn't look like she did in her 20s</h2>
-              <p className='text-white'>In a survey published in Harvard Business Review, women in leadership roles reported facing workplace age discrimination at every age bracket. In a survey published in Harvard Business Review, women in leadership roles reported facing workplace age discrimination at every age bracket</p>
-              <div>
-              <Views viewscount={1.1}  />
-              </div>
-          </div>
-          <div>
-              <Image src='/images/popular_blogs_img2.png' alt='popular-green-blog' className='w-full max-h-[20rem] rounded-bl-lg rounded-br-lg' width={300} height={290} />
-          </div>
-    </div>
-  )
+        <div
+            className={`PopularGreenBlogCard bg-primary flex flex-col gap-3 pt-4 min-w-60 ${
+                !readnext && "xs:hidden "
+            } md:block cursor-pointer group !rounded-lg`}
+        >
+            <div className={`flex flex-col gap-3 px-4 ${readnext && "md:h-full md:justify-between "}`}>
+                <h2 className="blog-title">{readnext ? blog.title : "lorem ipsumgenerated 5 more contents on youtube"}</h2>
+                <p className={`text-white ${readnext && "hidden"}`}>
+                    {readnext
+                        ? blog.desc
+                        : "In a survey published in Harvard Business Review, women in leadership roles reported facing workplace age discrimination at every age bracket. In a survey published in Harvard Business Review, women in leadership roles reported facing workplace age discrimination at every age bracket"}
+                </p>
+                <div className="flex justify-between mb-2">
+                    <p className="text-base font-semibold">{readnext ? blog.category : "Tech"}</p>
+                    <Views viewscount={blog?.views || 1.1} />
+                </div>
+            </div>
+            <div>
+                <Image
+                    src="/images/popular_blogs_img2.png"
+                    alt="popular-green-blog"
+                    className={`${readnext && "hidden"} w-full max-h-[20rem] rounded-bl-lg rounded-br-lg`}
+                    width={300}
+                    height={290}
+                />
+            </div>
+        </div>
+    )
 }
 
 export default PopularGreenBlogCard
