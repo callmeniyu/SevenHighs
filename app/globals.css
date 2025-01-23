@@ -7,7 +7,7 @@
     @apply font-poppins bg-secondary
   }
   .logo-text {
-    @apply text-secondary font-extrabold text-4xl md:text-4xl md:text-5xl text-center  font-gt-walsheim
+    @apply text-secondary font-extrabold text-4xl md:text-5xl text-center font-gt-walsheim
   }
   .nav-item{
     @apply text-white font-medium text-base cursor-pointer font-poppins

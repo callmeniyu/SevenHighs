@@ -34,7 +34,7 @@ const page = async ({ params }: { params: { id: string } }) => {
                     <div className="flex flex-col gap-3">
                         <div className="bg-primary md:px-3 px-2 py-5 rounded-lg">
                             <h1 className="blog-super_title">{blog[0]?.title}</h1>
-                            <p className="text-center font-base text-gray-300 my-2">{blog[0]?.desc}</p>
+                            <p className="text-center text-sm text-gray-300 my-2 font-poppins">{blog[0]?.desc}</p>
                             <div className="flex justify-between items-center mt-4 md:px-16">
                                 <div className="flex gap-2">
                                     <MdDateRange className="text-xl " />

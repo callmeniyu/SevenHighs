@@ -1,20 +1,25 @@
 import Image from "next/image"
 import React, { use } from "react"
 import Views from "./Views"
+import { BlogType } from "@/app/types"
+import Link from "next/link"
 
-const PopularBrightBlogCard = ({ img }: { img: string }) => {
+type PopularBrightBlogCardType = {
+    img: string
+    blog: BlogType
+}
+
+const PopularBrightBlogCard = ({ img, blog }:PopularBrightBlogCardType) => {
     return (
-        <div className="md:flex flex flex-col md:flex-row md:mt-0 mt-5 bg-secondary-light rounded-lg md:gap-2 cursor-pointer group">
+        <Link href={`blog/${blog.id}`} className="md:flex flex flex-col md:flex-row md:mt-0 mt-5 bg-secondary-light rounded-lg md:gap-2 cursor-pointer group">
             <div className=" md:flex flex flex-col gap-2 p-3 md:w-2/3">
-                <h4 className="blog-title">Jennifer Aniston, 55, says she keeps her diet in check with the '80/20' rule</h4>
+                <h4 className="blog-title">{ blog.title}</h4>
                 <p className="blog-desc">
-                    In a survey published in Harvard Business Review, women in leadership roles reported facing workplace
-                    age discrimination at every age bracket. In a survey published in Harvard Business Review, women in
-                    leadership roles reported facing workplace age discrimination at every age bracket
+                    {blog.desc}
                 </p>
                 <div className="flex justify-between ">
-                    <p className="text-base  font-semibold text-primary-dark">Tech</p>
-                    <Views viewscount={1.1} />
+                    <p className="text-base  font-semibold text-primary-dark">{blog.category}</p>
+                    <Views viewscount={blog.views | 1.1} />
                 </div>
             </div>
             <Image
@@ -24,7 +29,7 @@ const PopularBrightBlogCard = ({ img }: { img: string }) => {
                 width={200}
                 height={230}
             />
-        </div>
+        </Link>
     )
 }
 

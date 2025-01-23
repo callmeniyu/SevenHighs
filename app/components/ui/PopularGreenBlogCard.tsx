@@ -2,6 +2,7 @@ import Image from "next/image"
 import React from "react"
 import Views from "./Views"
 import { BlogType } from "@/app/types"
+import Link from "next/link"
 
 type PopularGreenBlogCardType = {
     readnext: boolean
@@ -10,20 +11,18 @@ type PopularGreenBlogCardType = {
 
 const PopularGreenBlogCard = ({ readnext, blog }: PopularGreenBlogCardType) => {
     return (
-        <div
+        <Link href={`/blog/${blog.id}`}
             className={`PopularGreenBlogCard bg-primary flex flex-col gap-3 pt-4 min-w-60 ${
                 !readnext && "xs:hidden "
             } md:block cursor-pointer group !rounded-lg`}
         >
             <div className={`flex flex-col gap-3 px-4 ${readnext && "md:h-full md:justify-between "}`}>
-                <h2 className="blog-title">{readnext ? blog.title : "lorem ipsumgenerated 5 more contents on youtube"}</h2>
+                <h2 className="blog-title"> {blog?.title}</h2>
                 <p className={`text-white ${readnext && "hidden"}`}>
-                    {readnext
-                        ? blog.desc
-                        : "In a survey published in Harvard Business Review, women in leadership roles reported facing workplace age discrimination at every age bracket. In a survey published in Harvard Business Review, women in leadership roles reported facing workplace age discrimination at every age bracket"}
+                    {blog?.desc}
                 </p>
                 <div className="flex justify-between mb-2">
-                    <p className="text-base font-semibold">{readnext ? blog.category : "Tech"}</p>
+                    <p className="text-base font-semibold">{blog?.category}</p>
                     <Views viewscount={blog?.views || 1.1} />
                 </div>
             </div>
@@ -36,7 +35,7 @@ const PopularGreenBlogCard = ({ readnext, blog }: PopularGreenBlogCardType) => {
                     height={290}
                 />
             </div>
-        </div>
+        </Link>
     )
 }
 

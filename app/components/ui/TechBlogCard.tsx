@@ -1,30 +1,30 @@
 import Image from "next/image"
 import Views from "./Views"
+import { BlogType } from "@/app/types"
+import Link from "next/link"
 
 interface TechBlogCardProps {
     img: string
     inverted?: boolean
+    blog: BlogType
 }
 
-const TechBlogCard: React.FC<TechBlogCardProps> = ({ img, inverted }) => {
+const TechBlogCard: React.FC<TechBlogCardProps> = ({ img, inverted, blog }) => {
     return (
-        <div className="flex flex-col gap-3 bg-secondary-dark rounded-lg p-3 cursor-pointer group">
+        <Link href={`/blog/${blog?.id}`} className="flex flex-col gap-3 bg-secondary-dark rounded-lg p-3 cursor-pointer group">
             <div className={`${inverted && "order-1"}` || ""}>
                 <Image src={img} alt="tech-blog" width={390} height={100} />
             </div>
             <div className="flex flex-col gap-1 bg-secondary-light rounded-lg p-3">
                 <h4 className="blog-title">
-                    Jennifer Love Hewitt, 45, says fans have a 'hard time' accepting that she doesn't look like she did in
-                    her 20s
+                    {blog?.title}
                 </h4>
                 <p className="blog-desc">
-                    In a survey published in Harvard Business Review, women in leadership roles reported facing workplace
-                    age discrimination at every age bracket. In a survey published in Harvard Business Review, women in
-                    leadership roles reported
+                    {blog?.desc}
                 </p>
                 <Views viewscount={1.1} />
             </div>
-        </div>
+        </Link>
     )
 }
 
