@@ -25,7 +25,6 @@ const page = async ({ params }: { params: { id: string } }) => {
     const readNextBlogs = readNextSnapshot.docs.map((doc) => {
         return doc.data() as BlogType
     });
-    console.log("readNextBlogs", readNextBlogs);
     
     return (
         <>

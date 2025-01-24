@@ -8,13 +8,22 @@ import { v4 as uuidv4 } from "uuid"
 import { ref } from "firebase/storage"
 import { BlogType } from "../types"
 import { getTime } from "../lib/utils"
+import { Client, ID, Storage } from "appwrite"
 
 const CreateBlog = () => {
+    const [img, setImg] = useState<File>()
+    const [imgLink, setImgLink] = useState<string>("")
+
+    // Ensure you have the correct endpoint and project ID
+    const client = new Client().setEndpoint("https://cloud.appwrite.io/v1").setProject("67932fc1001028bed41f")
+
+    const appStorage = new Storage(client)
+
     const blogsRef = collection(database, "blogs")
 
     const fetchLastID = async () => {
-        const q = query(blogsRef, orderBy("blogNo", "asc"));
-        const allBlogsSnapshot = await getDocs(q);
+        const q = query(blogsRef, orderBy("blogNo", "asc"))
+        const allBlogsSnapshot = await getDocs(q)
         if (!allBlogsSnapshot) {
             return null
         }
@@ -32,7 +41,6 @@ const CreateBlog = () => {
     const [views, setViews] = useState(1)
 
     const [content, setContent] = useState("")
-    const [img, setImg] = useState<File>()
 
     const imagesRef = ref(storage, img?.name)
 
@@ -40,6 +48,29 @@ const CreateBlog = () => {
         const file = e.target.files?.[0]
         if (file) {
             setImg(file)
+        }
+    }
+
+    const uploadAndAccessImage = async () => {
+        if (!img) {
+            console.error("No image file provided")
+            return
+        }
+
+        try {
+            const uploadResponse = await appStorage.createFile("679330fb001a2b3cbbd4", ID.unique(), img)
+            console.log("Image uploaded successfully:", uploadResponse)
+
+            const fileId = uploadResponse.$id
+
+            const downloadUrl = appStorage.getFileDownload("679330fb001a2b3cbbd4", fileId)
+            console.log("Download URL:", downloadUrl)
+
+            const previewUrl = appStorage.getFilePreview("679330fb001a2b3cbbd4", fileId)
+            if(previewUrl) setImgLink(previewUrl)
+
+        } catch (error) {
+            console.error("Error uploading or accessing the image:", error)
         }
     }
 
@@ -54,27 +85,24 @@ const CreateBlog = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
         setFormdata({ ...formdata, [name]: value })
-        console.log("formdata",formdata);
-        
     }
 
     const handleSubmit = async (e: FormData) => {
         const id = uuidv4()
         const blogNo = await fetchLastID()
-        console.log("blogNo", blogNo);
-        
-        // TODO: UPLAOD IMAGE TO DB
+
         const docRef = doc(database, "blogs", id)
         const blogData = {
             blogNo,
             id,
             ...formdata,
-            img: img ? URL.createObjectURL(img) : "",
+            imgLink,
             views,
             content,
-            time: getTime()
+            time: getTime(),
         }
-        const result = await setDoc(docRef, blogData)
+        const result:any = await setDoc(docRef, blogData)
+        if(result) console.log("Blog created successfully")
     }
 
     return (
@@ -161,21 +189,24 @@ const CreateBlog = () => {
                         <label className="font-semibold" htmlFor="category">
                             Image
                         </label>
-                        {img ? (
-                            <>
-                                <label className="" htmlFor="img">
-                                    <Image src={URL.createObjectURL(img)} width={150} height={100} alt="image" />
-                                </label>
-                                <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
-                            </>
-                        ) : (
-                            <div className="flex flex-col gap-3">
-                                <label className="" htmlFor="img">
-                                    <Image src="/svg/upload_area.svg" width={150} height={100} alt="image" />
-                                </label>
-                                <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
-                            </div>
-                        )}
+                        <div className="flex gap-1">
+                            {img ? (
+                                <div className="flex flex-col gap-3 min-w-44">
+                                    <label className="" htmlFor="img">
+                                        <Image src={URL.createObjectURL(img)} width={150} height={100} alt="image" />
+                                    </label>
+                                    <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
+                                </div>
+                            ) : (
+                                <div className="flex flex-col gap-3 min-w-44">
+                                    <label className="" htmlFor="img">
+                                        <Image src="/svg/upload_area.svg" width={150} height={100} alt="image" />
+                                    </label>
+                                    <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
+                                </div>
+                            )}
+                            <div className="px-4 py-2 bg-black h-10 rounded-lg self-end" onClick={uploadAndAccessImage}>Upload</div>
+                        </div>
                     </div>
 
                     <div data-color-mode="light" className="flex flex-col gap-2">

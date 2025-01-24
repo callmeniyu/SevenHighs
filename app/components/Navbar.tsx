@@ -19,7 +19,6 @@ const Navbar = () => {
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen)
     }
-    console.log("open", open)
 
     return (
         <div className="navbar bg-primary pt-5 pb-3">
