@@ -64,7 +64,7 @@ const MainBlogs = async () => {
 
             <div className="md:w-2/3 md:px-5 xs:mt-3 xs:w-full">
                 <Link href={`/blog/${mainBlogs[0]?.id}`} className=" flex flex-col gap-2 group cursor-pointer">
-                    <Image src={mainBlogs[0]?.img }" width={750} height={700} alt="Main-Blogs-img" />
+                    <Image src={mainBlogs[0]?.img } width={750} height={700} alt="Main-Blogs-img" />
                     <h2 className="font-semibold blog-title">{mainBlogs[0]?.title}</h2>
                     <p className="">{mainBlogs[0]?.desc}</p>
                 </Link>
