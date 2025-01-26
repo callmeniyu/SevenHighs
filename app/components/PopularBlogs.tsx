@@ -18,13 +18,13 @@ const PopularBlogs = async () => {
             return doc.data() as BlogType
         })
     return (
-        <div className="PopularBlogs px-3 md:px-5 md:flex md:flex-col gap-6">
+        <div className="PopularBlogs px-3 md:px-8 md:flex md:flex-col gap-6">
             <div className="flex md:flex-row xs:flex-col gap-5">
                 <Link href={`/blog/${popularBlogs[0]?.id}`} className="flex flex-col gap-3 md:w-2/3 md:pr-5 group">
                     <hr className="border border-black mb-3"/>
                     <div className="cursor-pointer">
                         <h4 className="blog-title mb-2">{ popularBlogs[0].title}</h4>
-                    <Image src="/images/popular_blogs_img1.png" className="md:w-full md:max-h-[25rem]" alt="popular-blog" width={700} height={100} />
+                    <Image src={ popularBlogs[0].imgLink} className="md:w-full md:max-h-[25rem] max-h-80" alt="popular-blog" width={700} height={100} />
                     </div>
                 </Link>
                 <div className="flex flex-col gap-3 md:w-1/3">

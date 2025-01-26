@@ -27,8 +27,9 @@ const PopularGreenBlogCard = ({ readnext, blog }: PopularGreenBlogCardType) => {
                 </div>
             </div>
             <div>
+                {/*  "/images/popular_blogs_img2.png" */}
                 <Image
-                    src="/images/popular_blogs_img2.png"
+                    src={blog?.imgLink}
                     alt="popular-green-blog"
                     className={`${readnext && "hidden"} w-full max-h-[20rem] rounded-bl-lg rounded-br-lg`}
                     width={300}

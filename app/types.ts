@@ -6,7 +6,7 @@ export type BlogType = {
     category: string
     date: string
     section: string
-    img: string
+    imgLink: string
     views: number
     content: string
     time: string

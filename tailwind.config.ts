@@ -10,8 +10,27 @@ export default {
     theme: {
         extend: {
             screens: {
-                xs:"300px"
+                xs: "300px",
             },
+            typography: {
+                DEFAULT: {
+                  css: {
+                    color: '#333',
+                    h1: { color: '#1a202c' },
+                    h2: { color: '#2d3748' },
+                    h3: { color: '#4a5568' },
+                    strong: { color: '#2d3748' },
+                    blockquote: {
+                      color: '#718096',
+                      fontStyle: 'italic',
+                      borderLeftColor: '#cbd5e0',
+                    },
+                    'ul > li::marker': {
+                      color: '#4a5568',
+                    },
+                  },
+                },
+              },
             colors: {
                 primary: {
                     DEFAULT: "#486D66",
@@ -32,5 +51,7 @@ export default {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        require("@tailwindcss/typography"), // Add this line
+    ],
 } satisfies Config

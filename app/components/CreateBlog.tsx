@@ -10,6 +10,7 @@ import { BlogType } from "../types"
 import { getTime } from "../lib/utils"
 import { Client, ID, Storage } from "appwrite"
 
+
 const CreateBlog = () => {
     const [img, setImg] = useState<File>()
     const [imgLink, setImgLink] = useState<string>("")
