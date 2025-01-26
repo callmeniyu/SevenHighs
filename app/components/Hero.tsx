@@ -1,7 +1,8 @@
 import Image from "next/image"
 import Search from "./ui/Search"
 
-const Hero = () => {
+const Hero =({query}: {query:string}) => {
+    
     return (
         <div className="hero w-full bg-primary flex justify-center items-center xs:pt-16 md:pt-10 px-4 md:px-28 xs:text-left md:text-center">
             <div className="flex flex-col gap-5">
@@ -11,9 +12,9 @@ const Hero = () => {
                 <p className="text-white text-xl">
                     Where we turn property puzzles into pieces of cake, and share laughs along the way!
                 </p>
-                <form action="" className="relative w-full max-w-2xl mr-auto md:mx-auto">
-                    <Search />
-                </form>
+                <div className="relative w-full max-w-2xl mr-auto md:mx-auto">
+                    <Search query={ query} />
+                </div>
                 <div className="relative mt-auto pt-7 justify-center flex md:gap-7">
                     <Image
                         src="/icons/palm_tree.png"

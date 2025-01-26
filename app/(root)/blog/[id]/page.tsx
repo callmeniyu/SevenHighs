@@ -23,7 +23,6 @@ const page = async ({ params }: { params: { id: string } }) => {
     })
 
     const parsedContent = md.render(blog[0]?.content || "")
-    console.log("parsedContent", parsedContent)
 
     const readnextQuery = query(blogRef, limit(5))
     const readNextSnapshot = await getDocs(readnextQuery)
