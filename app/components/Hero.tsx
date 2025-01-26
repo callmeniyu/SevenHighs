@@ -1,8 +1,7 @@
 import Image from "next/image"
 import Search from "./ui/Search"
 
-const Hero =({query}: {query:string}) => {
-    
+const Hero =({query}: {query:string}) => { 
     return (
         <div className="hero w-full bg-primary flex justify-center items-center xs:pt-16 md:pt-10 px-4 md:px-28 xs:text-left md:text-center">
             <div className="flex flex-col gap-5">
