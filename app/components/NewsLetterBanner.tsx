@@ -3,7 +3,7 @@ import React from "react"
 
 const NewsLetterBanner = () => {
     return (
-        <div className="bg-primary-dark mt-7 md:mt-12 flex flex-col md:flex-row mb-10 ">
+        <div id="newsletter" className="bg-primary-dark mt-7 md:mt-12 flex flex-col md:flex-row mb-10 ">
             <div className="flex flex-col gap-3 md:w-2/3 p-3 md:p-10 py-4">
                 <h2 className="font-semibold text-2xl md:text-3xl text-white">
                     Be Part of Our House Party! 🎉 <br />

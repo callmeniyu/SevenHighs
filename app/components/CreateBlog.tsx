@@ -89,6 +89,9 @@ const CreateBlog = () => {
     }
 
     const handleSubmit = async (e: FormData) => {
+        // TODO: FORM VALIDATION
+        // TODO: UPDATE BLOG
+
         const id = uuidv4()
         const blogNo = await fetchLastID()
 
