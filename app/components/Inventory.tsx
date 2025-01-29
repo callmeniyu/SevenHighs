@@ -4,21 +4,44 @@ import { MdKeyboardArrowDown } from "react-icons/md"
 import { BlogType } from "../types"
 import AdminSearch from "./ui/AdminSearch"
 import { useState } from "react"
+import { parseDate } from "../lib/utils"
 
 const Inventory = ({ allBlogs }: { allBlogs: BlogType[] }) => {
     const [searchedBlogs, setSearchedBlogs] = useState<BlogType[]>([]);
-    
+    const [sortBy, setSortBy] = useState<string>("blogNo");
     const findBlog = (searchResult: BlogType[]) => {
         setSearchedBlogs(searchResult);
         if (searchResult.length > 0) console.log("SearchedBlogs", searchResult);
     }
+
+    const sortBlogs = () => { 
+        
+        if (sortBy === "date") { 
+            allBlogs.sort((a, b) => parseDate(b.date).getTime() - parseDate(a.date).getTime());
+        }
+        if (sortBy == "views") {
+            allBlogs.sort((a, b) => b.views - a.views);
+        }
+    }
+
+    // interface HandleSortEvent extends React.ChangeEvent<HTMLSelectElement> {}
+
+    const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortBy(e.target.value);
+        if(sortBy) console.log("sortBy",sortBy);
+
+        sortBlogs();
+    }
+
     return (
         <div className="bg-primary-dark flex flex-col gap-4 items-center p-3  rounded-lg ">
             <div className="flex gap-4 justify-center my-3 items-center">
-                <div className="font-semibold text-white flex gap-1 items-center border border-white p-2 px-3 rounded-md">
-                    Sort
-                    <MdKeyboardArrowDown className="text-2xl" />
-                </div>
+                <select className="text-black flex gap-1 items-center border border-white p-2 px-3 rounded-md" value={sortBy} onChange={(e)=>handleSort(e)}>
+                    <option value="blogNo">Blog No</option>
+                    <option value="date">Date</option>
+                    <option value="views">Views</option>
+                    {/* <MdKeyboardArrowDown className="text-2xl" /> */}
+                </select>
                 <AdminSearch allBlogs={allBlogs} findBlogs={findBlog} />
             </div>
             <hr className="w-full" />

@@ -37,6 +37,9 @@ html{
   .copy-right{
     @apply text-black font-normal text-xs font-poppins
   }
+  .form-error{
+    @apply text-red-500 w-full 
+  }
 
 
   .no-scrollbar::-webkit-scrollbar {

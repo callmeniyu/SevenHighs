@@ -1,7 +1,6 @@
 "use client"
 import { BlogType } from "@/app/types"
 import { useEffect, useState } from "react"
-import { IoSearchOutline } from "react-icons/io5"
 type AdminSearchProps = {
     allBlogs: BlogType[]
     findBlogs: (searchResult: BlogType[]) => void
@@ -21,9 +20,10 @@ const AdminSearch = ({ allBlogs, findBlogs }: AdminSearchProps) => {
             findBlogs(searchedBlogs);
         }
         sendResult()
-   }, [searchTxt])
+    }, [searchTxt])
+    
     return (
-        <form className="flex gap-4 items-center" onSubmit={(e) => { e.preventDefault(); sendResult(); }}>
+        <div className="flex gap-4 items-center">
             <input
                 type="text"
                 name="search"
@@ -32,10 +32,7 @@ const AdminSearch = ({ allBlogs, findBlogs }: AdminSearchProps) => {
                 onChange={(e) => setSearchTxt(e.target.value)}
                 placeholder="Search Blog"
             />
-            <button type="submit" className="">
-                <IoSearchOutline className="text-3xl text-white" />
-            </button>
-        </form>
+        </div>
     )
 }
 

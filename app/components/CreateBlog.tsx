@@ -9,11 +9,22 @@ import { ref } from "firebase/storage"
 import { BlogType } from "../types"
 import { getTime } from "../lib/utils"
 import { Client, ID, Storage } from "appwrite"
-
+import { z } from "zod"
+import { formSchema } from "../lib/blogValidation"
 
 const CreateBlog = () => {
     const [img, setImg] = useState<File>()
     const [imgLink, setImgLink] = useState<string>("")
+    const [views, setViews] = useState(1)
+    const [content, setContent] = useState("")
+    const [errors, setErrors] = useState<Record<string, string>>({})
+    const [formdata, setFormdata] = useState({
+        title: "",
+        desc: "",
+        category: "",
+        date: "",
+        section: "",
+    })
 
     // Ensure you have the correct endpoint and project ID
     const client = new Client().setEndpoint("https://cloud.appwrite.io/v1").setProject("67932fc1001028bed41f")
@@ -39,12 +50,6 @@ const CreateBlog = () => {
         }
     }
 
-    const [views, setViews] = useState(1)
-
-    const [content, setContent] = useState("")
-
-    const imagesRef = ref(storage, img?.name)
-
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (file) {
@@ -68,20 +73,11 @@ const CreateBlog = () => {
             console.log("Download URL:", downloadUrl)
 
             const previewUrl = appStorage.getFilePreview("679330fb001a2b3cbbd4", fileId)
-            if(previewUrl) setImgLink(previewUrl)
-
+            if (previewUrl) setImgLink(previewUrl)
         } catch (error) {
             console.error("Error uploading or accessing the image:", error)
         }
     }
-
-    const [formdata, setFormdata] = useState({
-        title: "",
-        desc: "",
-        category: "",
-        date: "",
-        section: "",
-    })
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
@@ -92,21 +88,32 @@ const CreateBlog = () => {
         // TODO: FORM VALIDATION
         // TODO: UPDATE BLOG
 
-        const id = uuidv4()
-        const blogNo = await fetchLastID()
+        try {
+            const id = uuidv4()
+            const blogNo = await fetchLastID()
 
-        const docRef = doc(database, "blogs", id)
-        const blogData = {
-            blogNo,
-            id,
-            ...formdata,
-            imgLink,
-            views,
-            content,
-            time: getTime(),
+            const docRef = doc(database, "blogs", id)
+            const blogData = {
+                blogNo,
+                id,
+                ...formdata,
+                imgLink,
+                views,
+                content,
+                time: getTime(),
+            }
+            await formSchema.parseAsync(blogData)
+
+            const result: any = await setDoc(docRef, blogData)
+            if (result) console.log("Blog created successfully")
+        } catch (error) {
+            if (error instanceof z.ZodError) {
+                const fieldErorrs = error.flatten().fieldErrors
+
+                setErrors(fieldErorrs as unknown as Record<string, string>)
+                if (errors) console.log(errors)
+            }
         }
-        const result:any = await setDoc(docRef, blogData)
-        if(result) console.log("Blog created successfully")
     }
 
     return (
@@ -127,6 +134,7 @@ const CreateBlog = () => {
                                     className="text-black rounded-md p-1.5 px-3 placeholder:text-sm"
                                     placeholder="Give title of the blog"
                                 />
+                                {errors.title && <p className="form-error">{errors.title}</p>}
                             </div>
                             <div className="flex flex-col gap-2 max-w-[28rem]">
                                 <label className="font-semibold" htmlFor="desc">
@@ -139,6 +147,7 @@ const CreateBlog = () => {
                                     className="text-black rounded-md p-1.5 px-3 placeholder:text-sm h-44"
                                     placeholder="Give description of the blog"
                                 />
+                                {errors.desc && <p className="form-error">{errors.title}</p>}
                             </div>
                         </div>
                         <div className="flex flex-col  gap-3">
@@ -158,6 +167,7 @@ const CreateBlog = () => {
                                     <option value="Home Loan">Home Loan</option>
                                     <option value="Investment">Investment</option>
                                 </select>
+                                {errors.category && <p className="form-error">{errors.title}</p>}
                             </div>
                             <div className="flex flex-col gap-2 w-80 ">
                                 <label className="font-semibold" htmlFor="date">
@@ -171,6 +181,7 @@ const CreateBlog = () => {
                                     className="text-black rounded-md p-1.5 px-3 placeholder:text-sm"
                                     placeholder="Give title of the blog"
                                 />
+                                {errors.date && <p className="form-error">{errors.title}</p>}
                             </div>
                             <div className="flex flex-col gap-2 w-80">
                                 <label className="font-semibold" htmlFor="section">
@@ -185,6 +196,7 @@ const CreateBlog = () => {
                                     <option value="main">Main</option>
                                     <option value="popular">Popular</option>
                                 </select>
+                                {errors.section && <p className="form-error">{errors.title}</p>}
                             </div>
                         </div>
                     </div>
@@ -209,8 +221,12 @@ const CreateBlog = () => {
                                     <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
                                 </div>
                             )}
-                            <div className="px-4 py-2 bg-black h-10 rounded-lg self-end" onClick={uploadAndAccessImage}>Upload</div>
+                            <div className="px-4 py-2 bg-black h-10 rounded-lg self-end" onClick={uploadAndAccessImage}>
+                                Upload
+                            </div>
                         </div>
+                        {errors.imgLink && <p className="form-error">{errors.title}</p>}
+
                     </div>
 
                     <div data-color-mode="light" className="flex flex-col gap-2">
@@ -231,6 +247,8 @@ const CreateBlog = () => {
                                 disallowedElements: ["style"],
                             }}
                         />
+                                                        {errors.content && <p className="form-error">{errors.title}</p>}
+
                     </div>
                     <div className="flex gap-3 my-3">
                         <div className="bg-red-500 text-white p-2 px-3 rounded-lg font-semibold">Remove</div>
