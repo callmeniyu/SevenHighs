@@ -1,13 +1,16 @@
+"use client"
 import Image from "next/image"
 import { MdKeyboardArrowDown } from "react-icons/md"
 import { BlogType } from "../types"
 import AdminSearch from "./ui/AdminSearch"
+import { useState } from "react"
 
 const Inventory = ({ allBlogs }: { allBlogs: BlogType[] }) => {
-    let SearchedBlogs = [];
-    const findBlog = (searchResult:BlogType[]) => {
-        SearchedBlogs = searchResult
-        if(SearchedBlogs.length > 0) console.log("SearchedBlogs", SearchedBlogs);
+    const [searchedBlogs, setSearchedBlogs] = useState<BlogType[]>([]);
+    
+    const findBlog = (searchResult: BlogType[]) => {
+        setSearchedBlogs(searchResult);
+        if (searchResult.length > 0) console.log("SearchedBlogs", searchResult);
     }
     return (
         <div className="bg-primary-dark flex flex-col gap-4 items-center p-3  rounded-lg ">
@@ -16,7 +19,7 @@ const Inventory = ({ allBlogs }: { allBlogs: BlogType[] }) => {
                     Sort
                     <MdKeyboardArrowDown className="text-2xl" />
                 </div>
-                <AdminSearch allBlogs={allBlogs} findBlog={findBlog} />
+                <AdminSearch allBlogs={allBlogs} findBlogs={findBlog} />
             </div>
             <hr className="w-full" />
 
@@ -28,7 +31,7 @@ const Inventory = ({ allBlogs }: { allBlogs: BlogType[] }) => {
                 <h6 className="w-2/10">Image</h6>
             </div>
 
-            {allBlogs.map((blog: BlogType, index: number) => (
+            {(searchedBlogs.length > 0 ? searchedBlogs : allBlogs).map((blog: BlogType, index: number) => (
                 <div className="flex flex-col gap-2 w-full bg-secondary-light rounded-lg p-2 md:px-3" key={index}>
                     <h2 className="font-semibold">{blog.title}</h2>
                     <div className="flex w-full justify-between">
