@@ -106,6 +106,7 @@ const CreateBlog = () => {
 
             const result: any = await setDoc(docRef, blogData)
             if (result) console.log("Blog created successfully")
+            // TODO:CREATE TOAST
         } catch (error) {
             if (error instanceof z.ZodError) {
                 const fieldErorrs = error.flatten().fieldErrors

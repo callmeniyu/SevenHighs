@@ -30,7 +30,7 @@ const AdminSearch = ({ allBlogs, findBlogs }: AdminSearchProps) => {
                 className="w-56 md:w-96 rounded-lg h-10 px-3 p-2"
                 value={searchTxt}
                 onChange={(e) => setSearchTxt(e.target.value)}
-                placeholder="Search Blog"
+                placeholder="Search blog by title or description"
             />
         </div>
     )
