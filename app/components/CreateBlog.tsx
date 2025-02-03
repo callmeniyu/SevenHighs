@@ -1,22 +1,23 @@
 "use client"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import MDEditor from "@uiw/react-md-editor"
 import { database, storage } from "@/firebaseConfig"
-import { collection, doc, getDocs, orderBy, query, setDoc } from "firebase/firestore"
+import { collection, doc, getDocs, orderBy, query, setDoc, updateDoc } from "firebase/firestore"
 import { v4 as uuidv4 } from "uuid"
 import { ref } from "firebase/storage"
 import { BlogType } from "../types"
 import { getTime } from "../lib/utils"
 import { Client, ID, Storage } from "appwrite"
-import { z } from "zod"
+import { set, z } from "zod"
 import { formSchema } from "../lib/blogValidation"
 
-const CreateBlog = () => {
+const CreateBlog = ({ blog }: { blog?: BlogType }) => {
+    const { title, desc, category, date, section } = blog || {}
     const [img, setImg] = useState<File>()
-    const [imgLink, setImgLink] = useState<string>("")
+    const [imgLink, setImgLink] = useState<string | undefined>("")
     const [views, setViews] = useState(1)
-    const [content, setContent] = useState("")
+    const [content, setContent] = useState<string | undefined>("")
     const [errors, setErrors] = useState<Record<string, string>>({})
     const [formdata, setFormdata] = useState({
         title: "",
@@ -25,6 +26,19 @@ const CreateBlog = () => {
         date: "",
         section: "",
     })
+
+    useEffect(() => {
+        setFormdata({
+            title: title || "",
+            desc: desc || "",
+            category: category || "",
+            date: date || "",
+            section: section || "",
+        })
+        setContent(blog?.content)
+        setImgLink(blog?.imgLink)
+        console.log(img)
+    }, [])
 
     // Ensure you have the correct endpoint and project ID
     const client = new Client().setEndpoint("https://cloud.appwrite.io/v1").setProject("67932fc1001028bed41f")
@@ -82,12 +96,11 @@ const CreateBlog = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
         setFormdata({ ...formdata, [name]: value })
+        if (formdata) console.log("formdata", formdata)
     }
 
-    const handleSubmit = async (e: FormData) => {
-        // TODO: FORM VALIDATION
+    const handleCreate = async (e: FormData) => {
         // TODO: UPDATE BLOG
-
         try {
             const id = uuidv4()
             const blogNo = await fetchLastID()
@@ -117,10 +130,32 @@ const CreateBlog = () => {
         }
     }
 
+    const handleUpdate = async(id:string) => {
+        try {
+            const docRef = doc(database, "blogs", id)
+            const blogData = {
+                ...formdata,
+                imgLink,
+                content,
+                time: getTime(),
+            }
+
+            const result = await updateDoc(docRef,{...blogData})
+            console.log("Blog Updated successfully")
+        } catch (error) {
+            if (error instanceof z.ZodError) {
+                const fieldErorrs = error.flatten().fieldErrors
+
+                setErrors(fieldErorrs as unknown as Record<string, string>)
+                if (errors) console.log(errors)
+            }
+        }
+    }
+
     return (
         <>
             <div className="bg-primary-dark text-white p-3 md:px-5 rounded-lg w-full">
-                <form action={handleSubmit} className="flex flex-col gap-3">
+                <form onSubmit={(e) => { e.preventDefault(); blog ? handleUpdate(blog.id) : handleCreate}} className="flex flex-col gap-3">
                     <div className="flex flex-col md:flex-row gap-8">
                         <div className="flex flex-col gap-3">
                             <div className="flex flex-col gap-2 md:w-[28rem]">
@@ -214,6 +249,13 @@ const CreateBlog = () => {
                                     </label>
                                     <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
                                 </div>
+                            ) : blog?.imgLink ? (
+                                <div className="flex flex-col gap-3 min-w-44">
+                                    <label className="" htmlFor="img">
+                                        <Image src={imgLink || ""} width={150} height={100} alt="image" />
+                                    </label>
+                                    <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
+                                </div>
                             ) : (
                                 <div className="flex flex-col gap-3 min-w-44">
                                     <label className="" htmlFor="img">
@@ -227,7 +269,6 @@ const CreateBlog = () => {
                             </div>
                         </div>
                         {errors.imgLink && <p className="form-error">{errors.title}</p>}
-
                     </div>
 
                     <div data-color-mode="light" className="flex flex-col gap-2">
@@ -248,8 +289,7 @@ const CreateBlog = () => {
                                 disallowedElements: ["style"],
                             }}
                         />
-                                                        {errors.content && <p className="form-error">{errors.title}</p>}
-
+                        {errors.content && <p className="form-error">{errors.title}</p>}
                     </div>
                     <div className="flex gap-3 my-3">
                         <div className="bg-red-500 text-white p-2 px-3 rounded-lg font-semibold">Remove</div>

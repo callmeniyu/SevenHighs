@@ -4,6 +4,7 @@ import { BlogType } from "../types"
 import AdminSearch from "./ui/AdminSearch"
 import { useEffect, useState } from "react"
 import { parseDate } from "../lib/utils"
+import Link from "next/link"
 
 
 const Inventory = ({ allBlogs }: { allBlogs: BlogType[] }) => {
@@ -63,7 +64,7 @@ const Inventory = ({ allBlogs }: { allBlogs: BlogType[] }) => {
             </div>
 
             {(searchedBlogs.length > 0 ? searchedBlogs : sortedBlogs).map((blog: BlogType, index: number) => (
-                <div className="flex flex-col gap-2 w-full bg-secondary-light rounded-lg p-2 md:px-3" key={index}>
+                <Link href={`/admin/create/${blog.id}`} className="flex flex-col gap-2 w-full bg-secondary-light rounded-lg p-2 md:px-3" key={index}>
                     <h2 className="font-semibold">{blog.title}</h2>
                     <div className="flex w-full justify-between">
                         <h6 className="w-2/10">{blog.blogNo}</h6>
@@ -72,7 +73,7 @@ const Inventory = ({ allBlogs }: { allBlogs: BlogType[] }) => {
                         <h6 className="w-2/10 md:pl-16">{blog.section}</h6>
                         <Image src={blog.imgLink} className="object-cover h-12" width={80} height={60} alt="blog-img" />
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
     )
