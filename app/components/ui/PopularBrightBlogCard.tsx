@@ -24,7 +24,7 @@ const PopularBrightBlogCard = ({ img, blog }:PopularBrightBlogCardType) => {
             </div>
             <Image
                 src={blog?.imgLink}
-                className={`xs:w-full xs:max-h-60 object-cover rounded-bl-lg rounded-br-lg md:w-1/3 md:rounded-bl-none md:rounded-tr-lg`}
+                className={`xs:w-full xs:max-h-60 object-cover rounded-bl-lg rounded-br-lg md:rounded-bl-none md:rounded-tr-lg md:rounded-br-lg md:w-1/3 `}
                 alt="popular-bright-blog"
                 width={200}
                 height={230}
