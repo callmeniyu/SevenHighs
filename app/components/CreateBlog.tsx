@@ -11,10 +11,12 @@ import { getTime } from "../lib/utils"
 import { Client, ID, Storage } from "appwrite"
 import { set, z } from "zod"
 import { formSchema } from "../lib/blogValidation"
+import Toast from "./ui/Toast"
 
 const CreateBlog = ({ blog }: { blog?: BlogType }) => {
     const { title, desc, category, date, section } = blog || {}
     const [img, setImg] = useState<File>()
+    const [toast, setToast] = useState({ status: true, type: "image" })
     const [imgLink, setImgLink] = useState<string | undefined>("")
     const [views, setViews] = useState(1)
     const [content, setContent] = useState<string | undefined>("")
@@ -87,7 +89,10 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
             console.log("Download URL:", downloadUrl)
 
             const previewUrl = appStorage.getFilePreview("679330fb001a2b3cbbd4", fileId)
-            if (previewUrl) setImgLink(previewUrl)
+            if (previewUrl) {
+                setImgLink(previewUrl)
+                setToast({ status: true, type: "image" })
+            }
         } catch (error) {
             console.error("Error uploading or accessing the image:", error)
         }
@@ -99,8 +104,8 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
         if (formdata) console.log("formdata", formdata)
     }
 
-    const handleCreate = async (e: FormData) => {
-        // TODO: UPDATE BLOG
+    const handleCreate = async () => {
+
         try {
             const id = uuidv4()
             const blogNo = await fetchLastID()
@@ -118,8 +123,9 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
             await formSchema.parseAsync(blogData)
 
             const result: any = await setDoc(docRef, blogData)
+            
             if (result) console.log("Blog created successfully")
-            // TODO:CREATE TOAST
+            setToast({ status: true, type: "create" })
         } catch (error) {
             if (error instanceof z.ZodError) {
                 const fieldErorrs = error.flatten().fieldErrors
@@ -130,7 +136,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
         }
     }
 
-    const handleUpdate = async(id:string) => {
+    const handleUpdate = async (id: string) => {
         try {
             const docRef = doc(database, "blogs", id)
             const blogData = {
@@ -140,8 +146,9 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                 time: getTime(),
             }
 
-            const result = await updateDoc(docRef,{...blogData})
+            const result = await updateDoc(docRef, { ...blogData })
             console.log("Blog Updated successfully")
+            setToast({ status: true, type: "update" })
         } catch (error) {
             if (error instanceof z.ZodError) {
                 const fieldErorrs = error.flatten().fieldErrors
@@ -152,10 +159,22 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
         }
     }
 
+    const handleSubmit = (e: { preventDefault: () => void }) => {
+        e.preventDefault();
+        console.log("hiiii");
+        
+        if (blog) {
+            handleUpdate(blog?.id)
+        } else {
+            handleCreate()
+        }
+    }
+
     return (
         <>
+            <Toast toast={toast} />
             <div className="bg-primary-dark text-white p-3 md:px-5 rounded-lg w-full">
-                <form onSubmit={(e) => { e.preventDefault(); blog ? handleUpdate(blog.id) : handleCreate}} className="flex flex-col gap-3">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                     <div className="flex flex-col md:flex-row gap-8">
                         <div className="flex flex-col gap-3">
                             <div className="flex flex-col gap-2 md:w-[28rem]">
