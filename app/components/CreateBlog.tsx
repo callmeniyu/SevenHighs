@@ -271,7 +271,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                             ) : blog?.imgLink ? (
                                 <div className="flex flex-col gap-3 min-w-44">
                                     <label className="" htmlFor="img">
-                                        <Image src={imgLink || ""} width={150} height={100} alt="image" />
+                                        <Image src={imgLink || "/svg/upload_area.svg"} width={150} height={100} alt="image" />
                                     </label>
                                     <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
                                 </div>

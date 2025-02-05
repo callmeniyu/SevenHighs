@@ -1,4 +1,3 @@
-import { IoSearchOutline } from "react-icons/io5"
 import { MdBusinessCenter } from "react-icons/md"
 import { IoIosCloseCircleOutline } from "react-icons/io"
 import { RiComputerLine } from "react-icons/ri"
@@ -11,7 +10,6 @@ const Sidebar = ({ toggleDrawer } : {toggleDrawer: (open: boolean) => void}) => 
     return (
         <div className="w-80 bg-primary-dark h-full flex flex-col justify-between p-4 overflow-scroll no-scrollbar">
             <div className="flex gap-3 justify-between">
-                <IoSearchOutline className="text-3xl text-white cursor-pointer " />
                 <h1 className="logo-text !text-3xl">SevenHighs</h1>
                 <IoIosCloseCircleOutline onClick={() => toggleDrawer(false)} className="text-3xl text-white cursor-pointer " />
             </div>
