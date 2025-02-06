@@ -1,26 +1,31 @@
 "use client"
 import Image from "next/image"
 import React, { useState } from "react"
+import Toast from "./ui/Toast"
 const NewsLetterBanner = () => {
     const [email, setEmail] = useState("")
+    const [toast, setToast] = useState({ status: false, type: "" })
 
-    const subscribeUser = async (email:string) => {
+    const subscribeUser = async (email: string) => {
         try {
             const response = await fetch("/api/newsletter", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
-            });
-    
-            const data = await response.json();
-            console.log(data);
+            })
+
+            const data = await response.json()
+            if (data) setToast({ status: true, type: "newsletter" })
+            console.log(data)
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Error:", error)
         }
-    };
+    }
 
     return (
         <div id="newsletter" className="bg-primary-dark mt-7 md:mt-12 flex flex-col md:flex-row mb-10 ">
+            <Toast toast={toast} />
+
             <div className="flex flex-col gap-3 md:w-2/3 p-3 md:p-10 py-4">
                 <h2 className="font-semibold text-2xl md:text-3xl text-white">
                     Be Part of Our House Party! 🎉 <br />

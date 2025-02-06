@@ -25,6 +25,8 @@ const Toast = ({ toast }: { toast: { status: boolean, type: string } }) => {
                 return <h1>Successfully Updated Blog</h1>;
             case "image":
                 return <h1>Successfully Uploaded Image</h1>;
+            case "newsletter":
+                return <h1>Successfully Subscribed to the Newsletter</h1>;
             default:
                 return null;
         }
