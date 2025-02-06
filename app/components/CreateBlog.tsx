@@ -42,7 +42,6 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
         console.log(img)
     }, [])
 
-    // Ensure you have the correct endpoint and project ID
     const client = new Client().setEndpoint("https://cloud.appwrite.io/v1").setProject("67932fc1001028bed41f")
 
     const appStorage = new Storage(client)
