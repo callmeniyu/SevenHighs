@@ -3,10 +3,11 @@ import PopularGreenBlogCard from "@/app/components/ui/PopularGreenBlogCard"
 import Views from "@/app/components/ui/Views"
 import { BlogType } from "@/app/types"
 import { database } from "@/firebaseConfig"
-import { collection, getDocs, limit, query, where } from "firebase/firestore"
+import { collection, doc, getDocs, limit, query, updateDoc, where } from "firebase/firestore"
 import Image from "next/image"
 import { MdDateRange } from "react-icons/md"
 import markdownit from "markdown-it"
+import { after } from 'next/server'
 
 const md = markdownit()
 
@@ -29,6 +30,11 @@ const page = async ({ params }: { params: { id: string } }) => {
     if (!readNextSnapshot) return null
     const readNextBlogs = readNextSnapshot.docs.map((doc) => {
         return doc.data() as BlogType
+    })
+
+    after(async() => {
+        const docRef = doc(database, "blogs", id)
+        await updateDoc(docRef,{views: blog[0]?.views + 1})
     })
 
     return (

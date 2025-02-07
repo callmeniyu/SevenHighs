@@ -3,24 +3,24 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import MDEditor from "@uiw/react-md-editor"
 import { database, storage } from "@/firebaseConfig"
-import { collection, doc, getDocs, orderBy, query, setDoc, updateDoc } from "firebase/firestore"
+import { collection, deleteDoc, doc, getDocs, orderBy, query, setDoc, updateDoc } from "firebase/firestore"
 import { v4 as uuidv4 } from "uuid"
-import { ref } from "firebase/storage"
 import { BlogType } from "../types"
 import { getTime } from "../lib/utils"
 import { Client, ID, Storage } from "appwrite"
 import { set, z } from "zod"
 import { formSchema } from "../lib/blogValidation"
 import Toast from "./ui/Toast"
+import { useRouter } from "next/navigation"
 
 const CreateBlog = ({ blog }: { blog?: BlogType }) => {
     const { title, desc, category, date, section } = blog || {}
     const [img, setImg] = useState<File>()
     const [toast, setToast] = useState({ status: true, type: "image" })
     const [imgLink, setImgLink] = useState<string | undefined>("")
-    const [views, setViews] = useState(1)
     const [content, setContent] = useState<string | undefined>("")
     const [errors, setErrors] = useState<Record<string, string>>({})
+    const router = useRouter()
     const [formdata, setFormdata] = useState({
         title: "",
         desc: "",
@@ -104,7 +104,6 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
     }
 
     const handleCreate = async () => {
-
         try {
             const id = uuidv4()
             const blogNo = await fetchLastID()
@@ -122,7 +121,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
             await formSchema.parseAsync(blogData)
 
             const result: any = await setDoc(docRef, blogData)
-            
+
             if (result) console.log("Blog created successfully")
             setToast({ status: true, type: "create" })
         } catch (error) {
@@ -148,6 +147,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
             const result = await updateDoc(docRef, { ...blogData })
             console.log("Blog Updated successfully")
             setToast({ status: true, type: "update" })
+            router.push("/admin/inventory")
         } catch (error) {
             if (error instanceof z.ZodError) {
                 const fieldErorrs = error.flatten().fieldErrors
@@ -159,13 +159,25 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
     }
 
     const handleSubmit = (e: { preventDefault: () => void }) => {
-        e.preventDefault();
-        console.log("hiiii");
-        
+        e.preventDefault()
+        console.log("hiiii")
+
         if (blog) {
             handleUpdate(blog?.id)
         } else {
             handleCreate()
+        }
+    }
+
+    const handleDelete = async (id: string) => {
+        try {
+            const docRef = doc(database, "blogs", id)
+            await deleteDoc(docRef)
+            console.log("Document deleted successfully!")
+
+            router.push("/admin/inventory")
+        } catch (error) {
+            console.error("Error deleting document: ", error)
         }
     }
 
@@ -261,28 +273,33 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                         </label>
                         <div className="flex gap-1">
                             {img ? (
-                                <div className="flex flex-col gap-3 min-w-44">
+                                <div className="flex flex-col gap-3 min-w-44 cursor-pointer">
                                     <label className="" htmlFor="img">
                                         <Image src={URL.createObjectURL(img)} width={150} height={100} alt="image" />
                                     </label>
                                     <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
                                 </div>
                             ) : blog?.imgLink ? (
-                                <div className="flex flex-col gap-3 min-w-44">
+                                <div className="flex flex-col gap-3 min-w-44 cursor-pointer">
                                     <label className="" htmlFor="img">
-                                        <Image src={imgLink || "/svg/upload_area.svg"} width={150} height={100} alt="image" />
+                                        <Image
+                                            src={imgLink || "/svg/upload_area.svg"}
+                                            width={150}
+                                            height={100}
+                                            alt="image"
+                                        />
                                     </label>
                                     <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
                                 </div>
                             ) : (
-                                <div className="flex flex-col gap-3 min-w-44">
+                                <div className="flex flex-col gap-3 min-w-44 cursor-pointer">
                                     <label className="" htmlFor="img">
                                         <Image src="/svg/upload_area.svg" width={150} height={100} alt="image" />
                                     </label>
                                     <input type="file" name="img" id="img" onChange={(e) => handleImage(e)} hidden></input>
                                 </div>
                             )}
-                            <div className="px-4 py-2 bg-black h-10 rounded-lg self-end" onClick={uploadAndAccessImage}>
+                            <div className="px-4 py-2 cursor-pointer bg-black h-10 rounded-lg self-end" onClick={uploadAndAccessImage}>
                                 Upload
                             </div>
                         </div>
@@ -310,7 +327,14 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                         {errors.content && <p className="form-error">{errors.title}</p>}
                     </div>
                     <div className="flex gap-3 my-3">
-                        <div className="bg-red-500 text-white p-2 px-3 rounded-lg font-semibold">Remove</div>
+                        {blog && (
+                            <div
+                                className="bg-red-500 cursor-pointer text-white p-2 px-3 rounded-lg font-semibold"
+                                onClick={() => handleDelete(blog.id)}
+                            >
+                                Remove
+                            </div>
+                        )}
                         <button type="submit" className="bg-black text-white p-2 px-3 rounded-lg font-semibold">
                             Submit
                         </button>
