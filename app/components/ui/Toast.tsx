@@ -34,7 +34,7 @@ const Toast = ({ toast }: { toast: { status: boolean, type: string } }) => {
 
     return (
         open && (
-            <div className="bg-green-400 flex left-4 bottom-6 rounded-lg gap-3 w-80 fixed justify-center items-center p-3">
+            <div className={`bg-green-400 flex left-4 bottom-6 rounded-lg gap-3 w-80 fixed justify-center items-center p-3 `}>
                 {renderText()}
                 <IoMdClose onClick={() => setOpen(false)} className="text-black text-lg cursor-pointer" />
             </div>

@@ -7,7 +7,18 @@ import TechBlogs from "../components/TechBlogs"
 export default async function Home({ searchParams }: { searchParams: Promise<{ query?: string }> }) {
   const query = (await searchParams).query as string
 
-    return (
+  return (
+    // TODO:
+    //   1. ui for large devices.
+    //   2. Form validation not working.✔️
+    //   3. Form not submitting.✔️
+    //   4. Image toast.✔️
+    //   5. Remove blog.✔️
+    //   7. Link Social Media.
+    //   8. Sidebar elements.✔️
+    //   9. Remove trending search on mobiles.✔️
+    //   9. Blog title resize on mobiles.✔️
+
       <>
         <Hero query={ query} />
         <MainBlogs />

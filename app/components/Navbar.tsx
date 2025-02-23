@@ -4,6 +4,7 @@ import { IoMenu } from "react-icons/io5"
 import { useState } from "react"
 import Drawer from "@mui/material/Drawer"
 import Sidebar from "./ui/Sidebar"
+import Link from "next/link"
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
@@ -27,10 +28,10 @@ const Navbar = () => {
                         onClick={toggleDrawer(true)}
                     />
                 </div>
-                <div className="flex gap-2 md:absolute md:ml-[38%] mr-auto">
+                <Link href={"/"}  className="flex gap-2 md:absolute md:ml-[38%] mr-auto">
                     <Image src="/images/logo.png" width={40} height={35} alt="Hero Image" />
-                    <h1 className="logo-text !text-3xl ">SevenHighs</h1>
-                </div>
+                    <h1  className="logo-text !text-3xl ">SevenHighs</h1>
+                </Link>
                 <ul className="hidden md:flex justify-center gap-5">
                     <li className="nav-item "><a href="#newsletter">Newsletter</a></li>
                     {/* <li className="nav-item">About</li>
@@ -38,16 +39,14 @@ const Navbar = () => {
                 </ul>
             </div>
             <div>
-                <hr className="w-full" />
-                <ul className="flex justify-center gap-5 gap-y-2 py-4 flex-wrap">
-                    <li className="nav-item hover:text-black transition ease-in-out ">Tech</li>
+                <hr className="w-full " />
+                <ul className="flex justify-center gap-5 gap-y-2 py-4 flex-wrap xs:hidden md:flex">
                     <li className="nav-item hover:text-black transition ease-in-out ">
                         Investment
                     </li>
-                    <li className="nav-item hover:text-black transition ease-in-out ">Finance</li>
-                    <li className="nav-item hover:text-black transition ease-in-out ">Market</li>
-                    <li className="nav-item hover:text-black transition ease-in-out ">Home</li>
-                    <li className="nav-item hover:text-black transition ease-in-out ">Business</li>
+                    <li className="nav-item hover:text-black transition ease-in-out ">Legal & Finance</li>
+                    <li className="nav-item hover:text-black transition ease-in-out ">Upcoming Projects</li>
+                    <li className="nav-item hover:text-black transition ease-in-out ">Make in India</li>
                 </ul>
                 <hr className="w-full" />
             </div>

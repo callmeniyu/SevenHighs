@@ -6,9 +6,10 @@ const Hero =({query}: {query:string}) => {
         <div className="hero w-full bg-primary flex justify-center items-center xs:pt-10 md:pt-10 px-4 md:px-28 xs:text-left md:text-center">
             <div className="flex flex-col gap-5">
                 <h1 className="logo-text xs:text-left md:text-center">
-                    SevenHighs: Your Down-to-Earth Guide Through Real Estate Land
+                    SevenHighs: <br className="py-2"></br>
+                    Your 2 min blog on Real Estate
                 </h1>
-                <p className="text-white text-xl">
+                <p className="text-white text-lg">
                     Where we turn property puzzles into pieces of cake, and share laughs along the way!
                 </p>
                 <div className="relative w-full max-w-2xl mr-auto md:mx-auto">

@@ -54,7 +54,7 @@ const Search = ({ query }: { query: string }) => {
                 </button>
             </Form>
             <div >
-                { query ? (<SearchedBlogs blogs={searchedBlogs}/>): (isFocused && <TrendingSearch  className={`trending-search ${isFocused ? "show" : ""}`}/>)}
+                { query ? (<SearchedBlogs blogs={searchedBlogs}/>): (isFocused && <TrendingSearch  className={`trending-search xs:hidden md:flex ${isFocused ? "show" : ""}`}/>)}
             </div>
         </>
     )

@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { FaFacebook } from "react-icons/fa"
 import { FaInstagram } from "react-icons/fa"
 import { FaTwitter } from "react-icons/fa"
@@ -12,10 +13,10 @@ const Footer = ({sidebar}: FooterType) => {
         <div className="">
             <hr className={`border border-black my-6 ${sidebar && "border-white"}`} />
             <div className="flex flex-col md:flex-row gap-5 items-center md:justify-between py-3 px-3 md:px-8">
-                <div className={`flex gap-2 ${sidebar && "hidden"}`}>
+                <Link href={"/"} className={`flex gap-2 ${sidebar && "hidden"}`}>
                     <Image src="/images/logo.png" width={40} height={35} alt="Hero Image" />
                     <h1 className="logo-text !text-3xl !text-primary">SevenHighs</h1>
-                </div>
+                </Link>
 
                 <div className={`flex gap-10 md:gap-4 ${sidebar && "md:justify-between md:gap-6 text-white"}`}>
                     <FaFacebook className="text-3xl"/>

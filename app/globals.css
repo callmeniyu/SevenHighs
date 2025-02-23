@@ -11,7 +11,7 @@ html{
     @apply font-poppins bg-secondary
   }
   .logo-text {
-    @apply text-secondary font-extrabold text-4xl md:text-5xl text-center font-gt-walsheim
+    @apply text-secondary font-extrabold text-4xl text-3xl md:text-5xl text-center font-gt-walsheim
   }
   .nav-item{
     @apply text-white font-medium text-base cursor-pointer font-poppins
@@ -26,7 +26,7 @@ html{
     @apply text-black font-semibold text-2xl font-poppins
   }
   .blog-super_title{
-    @apply text-secondary text-center font-extrabold text-4xl font-gt-walsheim
+    @apply text-secondary md:text-center md:font-extrabold md:text-4xl text-2xl text-center  font-gt-walsheim
   }
   .blog-content{
     @apply text-black font-normal text-lg font-poppins

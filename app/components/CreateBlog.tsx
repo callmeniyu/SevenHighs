@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation"
 const CreateBlog = ({ blog }: { blog?: BlogType }) => {
     const { title, desc, category, date, section } = blog || {}
     const [img, setImg] = useState<File>()
-    const [toast, setToast] = useState({ status: true, type: "image" })
+    const [toast, setToast] = useState({ status: false, type: "" })
     const [imgLink, setImgLink] = useState<string | undefined>("")
     const [content, setContent] = useState<string | undefined>("")
     const [errors, setErrors] = useState<Record<string, string>>({})
@@ -88,7 +88,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
             console.log("Download URL:", downloadUrl)
 
             const previewUrl = appStorage.getFilePreview("679330fb001a2b3cbbd4", fileId)
-            if (previewUrl) {
+            if (previewUrl.length > 0) {
                 setImgLink(previewUrl)
                 setToast({ status: true, type: "image" })
             }
@@ -114,7 +114,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                 id,
                 ...formdata,
                 imgLink,
-                views,
+                views:0,
                 content,
                 time: getTime(),
             }
