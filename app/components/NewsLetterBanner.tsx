@@ -16,7 +16,6 @@ const NewsLetterBanner = () => {
 
             const data = await response.json()
             if (data) setToast({ status: true, type: "newsletter" })
-            console.log(data)
         } catch (error) {
             console.error("Error:", error)
         }

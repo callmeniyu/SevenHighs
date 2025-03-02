@@ -39,7 +39,6 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
         })
         setContent(blog?.content)
         setImgLink(blog?.imgLink)
-        console.log(img)
     }, [])
 
     const client = new Client().setEndpoint("https://cloud.appwrite.io/v1").setProject("67932fc1001028bed41f")
@@ -100,39 +99,44 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
         setFormdata({ ...formdata, [name]: value })
-        if (formdata) console.log("formdata", formdata)
     }
 
     const handleCreate = async () => {
         try {
-            const id = uuidv4()
-            const blogNo = await fetchLastID()
-
-            const docRef = doc(database, "blogs", id)
+            const id = uuidv4();
+            const blogNo = await fetchLastID();
+    
+            const docRef = doc(database, "blogs", id);
             const blogData = {
                 blogNo,
                 id,
                 ...formdata,
                 imgLink,
-                views:0,
+                views: 0,
                 content,
                 time: getTime(),
-            }
-            await formSchema.parseAsync(blogData)
-
-            const result: any = await setDoc(docRef, blogData)
-
-            if (result) console.log("Blog created successfully")
-            setToast({ status: true, type: "create" })
-        } catch (error) {
+            };
+    
+            // Validate before sending
+            await formSchema.parseAsync(blogData);
+    
+            await setDoc(docRef, blogData);
+            setToast({ status: true, type: "create" });
+    
+            // Clear errors when successful
+            setErrors({});
+        } catch (error: any) {
             if (error instanceof z.ZodError) {
-                const fieldErorrs = error.flatten().fieldErrors
-
-                setErrors(fieldErorrs as unknown as Record<string, string>)
-                if (errors) console.log(errors)
+                const fieldErrors = error.flatten().fieldErrors;
+    
+                // Correctly set errors
+                setErrors(fieldErrors as unknown as Record<string, string>);
+    
+                console.log("Validation Errors:", fieldErrors);
             }
         }
-    }
+    };
+    
 
     const handleUpdate = async (id: string) => {
         try {
@@ -160,7 +164,6 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
 
     const handleSubmit = (e: { preventDefault: () => void }) => {
         e.preventDefault()
-        console.log("hiiii")
 
         if (blog) {
             handleUpdate(blog?.id)
@@ -213,7 +216,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                                     className="text-black rounded-md p-1.5 px-3 placeholder:text-sm h-44"
                                     placeholder="Give description of the blog"
                                 />
-                                {errors.desc && <p className="form-error">{errors.title}</p>}
+                                {errors.desc && <p className="form-error">{errors.desc}</p>}
                             </div>
                         </div>
                         <div className="flex flex-col  gap-3">
@@ -233,7 +236,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                                     <option value="Home Loan">Home Loan</option>
                                     <option value="Investment">Investment</option>
                                 </select>
-                                {errors.category && <p className="form-error">{errors.title}</p>}
+                                {errors.category && <p className="form-error">{errors.category}</p>}
                             </div>
                             <div className="flex flex-col gap-2 w-80 ">
                                 <label className="font-semibold" htmlFor="date">
@@ -247,7 +250,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                                     className="text-black rounded-md p-1.5 px-3 placeholder:text-sm"
                                     placeholder="Give title of the blog"
                                 />
-                                {errors.date && <p className="form-error">{errors.title}</p>}
+                                {errors.date && <p className="form-error">{errors.date}</p>}
                             </div>
                             <div className="flex flex-col gap-2 w-80">
                                 <label className="font-semibold" htmlFor="section">
@@ -262,7 +265,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                                     <option value="main">Main</option>
                                     <option value="popular">Popular</option>
                                 </select>
-                                {errors.section && <p className="form-error">{errors.title}</p>}
+                                {errors.section && <p className="form-error">{errors.section}</p>}
                             </div>
                         </div>
                     </div>
@@ -303,7 +306,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                                 Upload
                             </div>
                         </div>
-                        {errors.imgLink && <p className="form-error">{errors.title}</p>}
+                        {errors.imgLink && <p className="form-error">{errors.imgLink}</p>}
                     </div>
 
                     <div data-color-mode="light" className="flex flex-col gap-2">
@@ -324,7 +327,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                                 disallowedElements: ["style"],
                             }}
                         />
-                        {errors.content && <p className="form-error">{errors.title}</p>}
+                        {errors.content && <p className="form-error">{errors.content}</p>}
                     </div>
                     <div className="flex gap-3 my-3">
                         {blog && (

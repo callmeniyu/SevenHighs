@@ -17,8 +17,6 @@ const page = async ({ params }: { params: { id: string } }) => {
         return doc.data() as BlogType
     })
 
-    if (blog) console.log("blog", blog)
-
     return (
         <div className="flex gap-3 flex-wrap md:flex-nowrap">
             <SidebarAdmin />

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import * as SibApiV3Sdk from "@sendinblue/client";
 
 export const POST = async (req: NextRequest) => {
-    console.log("hittt");
     
     try {
         // ✅ Parse request body

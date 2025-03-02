@@ -22,8 +22,6 @@ const Inventory = ({ allBlogs }: { allBlogs: BlogType[] }) => {
     useEffect(() => {
         let blogsToSort = searchedBlogs ? searchedBlogs:[...allBlogs];
         const sortBlogs = () => {
-            console.log("sortBy", sortBy)
-
             if (sortBy == "date") {
                 const blogsByDate = blogsToSort.sort((a, b) => parseDate(b.date).getTime() - parseDate(a.date).getTime())
                 setSortedBlogs(blogsByDate)
