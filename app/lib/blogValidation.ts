@@ -5,7 +5,7 @@ export const formSchema = z.object({
     desc: z.string().min(30).max(500).nonempty("Description is required"),
     category: z.string().min(3).max(20).nonempty("Please select a category"),
     date: z.string().min(5).max(20).nonempty("Please select a Date"),
-    section: z.string().min(5).max(20),
+    section: z.string().nonempty("Please select a section"),
     imgLink: z.string().min(3, "Please provide an Image").nonempty("Provide an image"),
     content: z.string().min(200).nonempty("Provide the content"),
 })

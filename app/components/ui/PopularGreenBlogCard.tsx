@@ -11,7 +11,7 @@ type PopularGreenBlogCardType = {
 
 const PopularGreenBlogCard = ({ readnext, blog }: PopularGreenBlogCardType) => {
     return (
-        <Link href={`/blog/${blog.id}`}
+        <Link href={`/blog/${blog?.id}`}
             className={`PopularGreenBlogCard bg-primary flex flex-col gap-3 pt-4 min-w-60 ${
                 !readnext && "xs:hidden "
             } md:block cursor-pointer group !rounded-lg`}

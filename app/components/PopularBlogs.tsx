@@ -23,8 +23,8 @@ const PopularBlogs = async () => {
                 <Link href={`/blog/${popularBlogs[0]?.id}`} className="flex flex-col gap-3 md:w-2/3 md:pr-5 group">
                     <hr className="border border-black mb-3"/>
                     <div className="cursor-pointer">
-                        <h4 className="blog-title mb-2">{ popularBlogs[0].title}</h4>
-                    <Image src={ popularBlogs[0].imgLink} className="md:w-full md:max-h-[25rem] max-h-80" alt="popular-blog" width={700} height={100} />
+                        <h4 className="blog-title mb-2">{ popularBlogs[0]?.title}</h4>
+                    <Image src={ popularBlogs[0]?.imgLink} className="md:w-full md:max-h-[25rem] max-h-80" alt="popular-blog" width={700} height={100} />
                     </div>
                 </Link>
                 <div className="flex flex-col gap-3 md:w-1/3">
@@ -33,27 +33,27 @@ const PopularBlogs = async () => {
                     <div className="flex flex-col gap-3">
                         <Link href={`/blog/${popularBlogs[1]?.id}`} className="flex gap-2 items-start cursor-pointer group">
                             <p className="font-semibold text-lg text-primary-dark">1</p>
-                            <h2 className="blog-title">{ popularBlogs[1].title}</h2>
+                            <h2 className="blog-title">{ popularBlogs[1]?.title}</h2>
                         </Link>
                         <Link href={`/blog/${popularBlogs[2]?.id}`} className="flex gap-2 items-start cursor-pointer group">
                             <p className="font-semibold text-lg text-primary-dark">2</p>
                             <h2 className="blog-title">
-                            { popularBlogs[2].title}
+                            { popularBlogs[2]?.title}
                             </h2>
                         </Link>
                         <Link href={`/blog/${popularBlogs[3]?.id}`} className="flex gap-2 items-start cursor-pointer group">
                             <p className="font-semibold text-lg text-primary-dark">3</p>
                             <h2 className="blog-title">
-                            { popularBlogs[3].title}
+                            { popularBlogs[3]?.title}
                             </h2>
                         </Link>
                         <Link href={`/blog/${popularBlogs[4]?.id}`} className="flex gap-2 items-start cursor-pointer group">
                             <p className="font-semibold text-lg text-primary-dark">4</p>
-                            <h2 className="blog-title">{ popularBlogs[4].title}</h2>
+                            <h2 className="blog-title">{ popularBlogs[4]?.title}</h2>
                         </Link>
                         <Link href={`/blog/${popularBlogs[5]?.id}`} className="flex gap-2 items-start cursor-pointer group">
                             <p className="font-semibold text-lg text-primary-dark">5</p>
-                            <h2 className="blog-title">{ popularBlogs[5].title}</h2>
+                            <h2 className="blog-title">{ popularBlogs[5]?.title}</h2>
                         </Link>
                     </div>
                 </div>

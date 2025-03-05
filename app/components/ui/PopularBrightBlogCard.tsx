@@ -11,15 +11,15 @@ type PopularBrightBlogCardType = {
 
 const PopularBrightBlogCard = ({ img, blog }:PopularBrightBlogCardType) => {
     return (
-        <Link href={`blog/${blog.id}`} className="md:flex flex flex-col md:flex-row md:mt-0 mt-5 min-h-5 bg-secondary-light rounded-lg md:gap-2 cursor-pointer group">
+        <Link href={`blog/${blog?.id}`} className="md:flex flex flex-col md:flex-row md:mt-0 mt-5 min-h-5 bg-secondary-light rounded-lg md:gap-2 cursor-pointer group">
             <div className=" md:flex flex flex-col gap-2 p-3 md:w-2/3">
-                <h4 className="blog-title">{ blog.title}</h4>
+                <h4 className="blog-title">{ blog?.title}</h4>
                 <p className="blog-desc">
-                    {blog.desc.substring(0, 400)} . . .
+                    {blog?.desc.substring(0, 400)} . . .
                 </p>
                 <div className="flex justify-between ">
-                    <p className="text-base  font-semibold text-primary-dark">{blog.category}</p>
-                    <Views viewscount={blog.views | 1.1} />
+                    <p className="text-base  font-semibold text-primary-dark">{blog?.category}</p>
+                    <Views viewscount={blog?.views | 1.1} />
                 </div>
             </div>
             <Image

@@ -18,6 +18,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
     //   8. Sidebar elements.✔️
     //   9. Remove trending search on mobiles.✔️
     //   9. Blog title resize on mobiles.✔️
+    //   10. Sort blogs.
 
       <>
         <Hero query={ query} />

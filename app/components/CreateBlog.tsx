@@ -24,18 +24,18 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
     const [formdata, setFormdata] = useState({
         title: "",
         desc: "",
-        category: "",
+        category: "tech",
         date: "",
-        section: "",
+        section: "main",
     })
 
     useEffect(() => {
         setFormdata({
             title: title || "",
             desc: desc || "",
-            category: category || "",
+            category: category || "tech",
             date: date || "",
-            section: section || "",
+            section: section || "main",
         })
         setContent(blog?.content)
         setImgLink(blog?.imgLink)
@@ -98,8 +98,12 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
-        setFormdata({ ...formdata, [name]: value })
+        setFormdata({ ...formdata, [name]: value })        
     }
+
+    // useEffect(() => {
+    //     console.log("formdata", formdata);
+    // },[formdata])
 
     const handleCreate = async () => {
         try {
