@@ -24,7 +24,7 @@ const PopularBlogs = async () => {
                     <hr className="border border-black mb-3"/>
                     <div className="cursor-pointer">
                         <h4 className="blog-title mb-2">{ popularBlogs[0]?.title}</h4>
-                    <Image src={ popularBlogs[0]?.imgLink} className="md:w-full md:max-h-[25rem] max-h-80" alt="popular-blog" width={700} height={100} />
+                    <Image src={ popularBlogs[0]?.imgLink} className="rounded-lg md:w-full md:max-h-[25rem] max-h-80" alt="popular-blog" width={700} height={100} />
                     </div>
                 </Link>
                 <div className="flex flex-col gap-3 md:w-1/3">

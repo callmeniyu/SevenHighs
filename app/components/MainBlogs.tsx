@@ -19,7 +19,7 @@ const MainBlogs = async () => {
     
 
     return (
-        <div className="MainBlogs md:flex gap-3 py-5 px-3 md:px-7">
+        <div className="md:flex gap-3 py-5 md:py-6 px-3 md:px-16">
             <div className="flex md:flex-col gap-1 p-3 md:w-1/3 bg-primary rounded-lg overflow-x-scroll md:overflow-hidden md:no-scrollbar">
                 <div className="flex flex-col gap-2 min-w-60 md:border-none border-r-2 border-r-gray-300">
                     <h4 className="font-semibold text-base text-secondary-dark">{mainBlogs[2]?.category}</h4>
@@ -64,13 +64,13 @@ const MainBlogs = async () => {
             </div>
 
             <div className="md:w-2/3 md:px-5 xs:mt-3 md:mt-0 xs:w-full">
-                <Link href={`/blog/${mainBlogs[0]?.id}`} className=" flex flex-col gap-2 group cursor-pointer ">
-                    <Image src={mainBlogs[0]?.imgLink} width={750} height={500} alt="Main-Blogs-img" className="max-h-96" />
+                <Link href={`/blog/${mainBlogs[0]?.id}`} className="flex flex-col gap-2 group cursor-pointer ">
+                    <Image src={mainBlogs[0]?.imgLink} width={750} height={400} alt="Main-Blogs-img" className="max-h-96 rounded-lg" />
                     <h2 className="font-semibold blog-title">{mainBlogs[0]?.title}</h2>
                     <p className="">{mainBlogs[0]?.desc.substring(0,400)} . . .</p>
                 </Link>
                 <Link href={`/blog/${mainBlogs[1]?.id}`} className="my-3 flex flex-col gap-2 group cursor-pointer">
-                    <Image src={mainBlogs[1]?.imgLink} width={750} height={700} alt="Main-Blogs-img" />
+                    <Image src={mainBlogs[1]?.imgLink} width={750} height={500} alt="Main-Blogs-img" className="max-h-96 rounded-lg"/>
                     <h2 className="font-semibold blog-title">{mainBlogs[1]?.title}</h2>
                     <p className="">{mainBlogs[1]?.desc.substring(0,400)} . . .</p>
                 </Link>

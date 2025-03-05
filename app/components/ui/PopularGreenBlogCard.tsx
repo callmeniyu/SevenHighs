@@ -23,7 +23,7 @@ const PopularGreenBlogCard = ({ readnext, blog }: PopularGreenBlogCardType) => {
                 </p>
                 <div className="flex justify-between mb-2">
                     <p className="text-base font-semibold">{blog?.category}</p>
-                    <Views viewscount={blog?.views || 1.1} />
+                    <Views viewscount={blog?.views || 12} />
                 </div>
             </div>
             <div>
