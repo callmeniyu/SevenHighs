@@ -39,7 +39,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 
     return (
         <>
-            <div className="BlogPage md:px-24 px-1 py-8">
+            <div className="BlogPage md:px-24 px-1 py-8 2xl:px-40">
                 <div className="md:px-16 px-2 md:py-10 py-4 bg-secondary-light rounded-xl">
                     <div className="flex flex-col gap-3">
                         <div className="bg-primary md:px-3 px-2 py-5 rounded-lg">
@@ -60,7 +60,7 @@ const page = async ({ params }: { params: { id: string } }) => {
                             src={blog[0]?.imgLink}
                             width={1000}
                             height={1080}
-                            className="max-h-96 object-cover rounded-lg"
+                            className="max-h-[30rem] object-cover rounded-lg w-full"
                             alt="blog-img"
                         />
 
@@ -79,13 +79,15 @@ const page = async ({ params }: { params: { id: string } }) => {
             </div>
             <div className="px-3 mb-8">
                 <hr className="border border-black my-3" />
+                <div className="2xl:px-10">
                 <h4 className="section-title">Read Next</h4>
-                <div className="flex gap-2 overflow-x-scroll no-scrollbar">
+                <div className="flex gap-2 overflow-x-scroll no-scrollbar mt-3">
                     <PopularGreenBlogCard readnext blog={readNextBlogs[0]} />
                     <PopularGreenBlogCard readnext blog={readNextBlogs[1]} />
                     <PopularGreenBlogCard readnext blog={readNextBlogs[3]} />
                     <PopularGreenBlogCard readnext blog={readNextBlogs[2]} />
                     <PopularGreenBlogCard readnext blog={readNextBlogs[4]} />
+                </div>
                 </div>
             </div>
             <NewsLetterBanner />

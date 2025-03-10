@@ -13,7 +13,7 @@ const TechBlogCard: React.FC<TechBlogCardProps> = ({ img, inverted, blog }) => {
     return (
         <Link href={`/blog/${blog?.id}`} className="flex flex-col gap-3 bg-secondary-dark rounded-lg p-3 cursor-pointer group">
             <div className={`${inverted && "order-1"}` || ""}>
-                <Image src={blog?.imgLink} alt="tech-blog" width={390} height={100} className="max-h-64 object-cover rounded-lg" />
+                <Image src={blog?.imgLink} alt="tech-blog" width={390} height={100} className="max-h-64 object-cover rounded-lg w-full" />
             </div>
             <div className="flex flex-col gap-1 bg-secondary-light rounded-lg p-3">
                 <h4 className="blog-title">

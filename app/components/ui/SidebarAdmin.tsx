@@ -5,11 +5,11 @@ import Link from "next/link"
 const SidebarAdmin = () => {
   return (
     <div className="flex w-full bg-primary-dark  md:w-1/4 p-3">
-    <div className="flex md:flex-col gap-3 justify-between md:justify-start text-white w-full">
+    <div className="flex md:flex-col gap-3 justify-between md:justify-start text-white w-full ">
         <div className="flex gap-2 items-center">
             <IoIosPerson className="text-5xl" />
             <div>
-                <h5 className="font-semibold">Amal Jasim</h5>
+                <h5 className="font-semibold">Amal Jazim</h5>
                 <p className="text-xs text-secondary-dark">Admin</p>
             </div>
         </div>

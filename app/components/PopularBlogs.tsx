@@ -9,7 +9,7 @@ import Link from "next/link"
 const PopularBlogs = async () => {
         const blogsRef = collection(database, "blogs")
     
-        const q = query(blogsRef, where("section", "==", "popular"), orderBy("blogNo", "asc"))
+        const q = query(blogsRef, where("section", "==", "popular"), orderBy("blogNo", "desc"))
         const querySnapshot = await getDocs(q)
     
         if (!querySnapshot) return null
@@ -18,7 +18,7 @@ const PopularBlogs = async () => {
             return doc.data() as BlogType
         })
     return (
-        <div className="PopularBlogs px-3 md:px-8 md:flex md:flex-col gap-6">
+        <div className="PopularBlogs px-3 md:px-8 md:flex md:flex-col gap-6 2xl:px-20">
             <div className="flex md:flex-row xs:flex-col gap-5">
                 <Link href={`/blog/${popularBlogs[0]?.id}`} className="flex flex-col gap-3 md:w-2/3 md:pr-5 group">
                     <hr className="border border-black mb-3"/>
@@ -60,7 +60,7 @@ const PopularBlogs = async () => {
             </div>
 
 
-            <div className="flex  md:gap-4">
+            <div className="flex  md:gap-4 2xl:gap-8">
                 <div className="md:w-1/3">
                     <PopularGreenBlogCard readnext={false} blog={popularBlogs[6]}/>
                 </div>

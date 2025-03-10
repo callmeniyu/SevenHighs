@@ -24,7 +24,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
     const [formdata, setFormdata] = useState({
         title: "",
         desc: "",
-        category: "tech",
+        category: "",
         date: "",
         section: "main",
     })
@@ -235,10 +235,10 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
                                     name="category"
                                     id="category"
                                 >
-                                    <option value="Finance">Finance</option>
-                                    <option value="Tech">Tech</option>
-                                    <option value="Home Loan">Home Loan</option>
                                     <option value="Investment">Investment</option>
+                                    <option value="Legal & Finance">Legal & Finance</option>
+                                    <option value="Upcoming Projects">Upcoming Projects</option>
+                                    <option value="Make in India">Make in India</option>
                                 </select>
                                 {errors.category && <p className="form-error">{errors.category}</p>}
                             </div>
