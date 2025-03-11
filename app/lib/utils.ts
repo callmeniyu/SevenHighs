@@ -21,3 +21,10 @@ export const getTime = () => {
 export const parseDate = (dateStr: string): Date => {
     return new Date(dateStr)
 }
+
+
+export const ADMIN_PASSWORD = "admin123";
+
+export function verifyAdminPassword(inputPassword: string) {
+  return inputPassword === ADMIN_PASSWORD;
+}

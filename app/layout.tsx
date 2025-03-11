@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from 'next/font/local';
 import "./globals.css";
 import { Poppins } from "next/font/google";
+import { AuthProvider } from "@/context/AuthProvider";
 
 
 const gTWalsheim = localFont({
@@ -36,9 +37,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={` ${gTWalsheim.variable} ${poppins.variable}`}>
-      {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
