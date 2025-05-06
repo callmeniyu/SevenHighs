@@ -7,7 +7,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['cloud.appwrite.io'], // Add the domain here
+    domains: ['cloud.appwrite.io'], // Add the domain here,
   },
 };
 

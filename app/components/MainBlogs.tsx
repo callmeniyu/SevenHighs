@@ -8,7 +8,7 @@ import Link from "next/link"
 const MainBlogs = async () => {
     const blogsRef = collection(database, "blogs")
 
-    const q = query(blogsRef, where("section", "==", "main"), orderBy("blogNo", "desc"))
+    const q = query(blogsRef, where("section", "==", "main"), orderBy("blogNo", "asc"))
     const querySnapshot = await getDocs(q)
 
     if (!querySnapshot) return null

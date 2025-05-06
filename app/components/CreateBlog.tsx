@@ -41,7 +41,7 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
         setImgLink(blog?.imgLink)
     }, [])
 
-    const client = new Client().setEndpoint("https://cloud.appwrite.io/v1").setProject("67932fc1001028bed41f")
+    const client = new Client().setEndpoint("https://fra.cloud.appwrite.io/v1").setProject("67932fc1001028bed41f")
 
     const appStorage = new Storage(client)
 
@@ -76,21 +76,19 @@ const CreateBlog = ({ blog }: { blog?: BlogType }) => {
             console.error("No image file provided")
             return
         }
-
+    
         try {
-            const uploadResponse = await appStorage.createFile("679330fb001a2b3cbbd4", ID.unique(), img)
-            console.log("Image uploaded successfully:", uploadResponse)
-
+            const uploadResponse = await appStorage.createFile(
+                "679330fb001a2b3cbbd4", 
+                ID.unique(), 
+                img
+            )
+            
             const fileId = uploadResponse.$id
-
-            const downloadUrl = appStorage.getFileDownload("679330fb001a2b3cbbd4", fileId)
-            console.log("Download URL:", downloadUrl)
-
-            const previewUrl = appStorage.getFilePreview("679330fb001a2b3cbbd4", fileId)
-            if (previewUrl.length > 0) {
-                setImgLink(previewUrl)
-                setToast({ status: true, type: "image" })
-            }
+            const fileUrl = appStorage.getFileView("679330fb001a2b3cbbd4", fileId)
+            
+            setImgLink(fileUrl.toString()) // Convert URL object to string
+            setToast({ status: true, type: "image" })
         } catch (error) {
             console.error("Error uploading or accessing the image:", error)
         }
